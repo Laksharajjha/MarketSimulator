@@ -1,0 +1,27 @@
+# 'version' attribute is removed as it's obsolete
+services:
+  # Service 1: Our Go App
+  market-app:
+    build: .
+    hostname: market-app
+    ports:
+      - "8080:8080"
+    restart: always
+
+  # Service 2: Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    restart: always
+
+  # Service 3: Grafana
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    restart: always
